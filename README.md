@@ -1,4 +1,6 @@
-# queryParams-uToolsPlugin queryParam 与 JSON互转插件
+# queryParams-uToolsPlugin 
+
+queryParam 与 JSON互转的 utools插件
 
 ### 仓库地址
 
