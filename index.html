@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8" />
+        <!-- 引入样式 -->
+        <link rel="stylesheet" href="el.css" />
+        <!-- 引入组件库 -->
+        <script src="vue.min.js"></script>
+        <script src="el.js"></script>
+        <style>
+            .preStr,
+            .queryParams {
+                font-size: 16px;
+            }
+            .margin-b-20 {
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <el-input
+                class="queryParams"
+                type="textarea"
+                autosize
+                placeholder="请输入 queryParams "
+                v-model="textarea"
+                clearable
+                :autosize="{ minRows: 3 }"
+                style="margin-bottom:20px;"
+            >
+            </el-input>
+            <el-row type="flex" justify="space-between" class="margin-b-20">
+                <el-button
+                    @click="handleTranClick(0)"
+                    class="el-icon-bottom"
+                    type="primary"
+                    >转 JSON</el-button
+                >
+                <el-button
+                    @click="handleTranClick(1)"
+                    class="el-icon-top"
+                    type="primary"
+                    >转 queryParams</el-button
+                >
+            </el-row>
+            <el-input
+                class="preStr"
+                type="textarea"
+                :autosize="{ minRows: 3 }"
+                placeholder="请输入 JSON "
+                v-model="preStr"
+                clearable
+            >
+            </el-input>
+        </div>
+        <!-- <script src="index.js"></script> -->
+    </body>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    textarea: '',
+                    preStr: ''
+                }
+            },
+            methods: {
+                handleTranClick(type) {
+                    if (type === 1) {
+                        let val = this.preStr
+                        try {
+                            let data = JSON.parse(val)
+                            let str = '';
+                            for(let key in data){
+                                str+=`&${key}=${data[key]}`
+                            }
+                            str = str.replace(/&/,'');
+                            this.textarea = str;
+                        } catch (err) {
+                            this.$message.error(
+                                'JSON 解析失败，请检查格式是否正确'
+                            )
+                        }
+                    } else {
+                        console.log(this.textarea)
+                        let val = decodeURI(this.textarea.trim()),
+                            str = ''
+                        if (val.match(/[?|=]/g)) {
+                            if(!val.includes('?')) val = '?'+val;
+                            let arr = val.split('?')[1].split('&')
+                            let obj = {}
+                            for (let i of arr) {
+                                obj[i.split('=')[0]] = i.split('=')[1]
+                            }
+                            str = JSON.stringify(obj, null, 8)
+                        } else {
+                            str = ''
+                        }
+                        this.preStr = str
+                    }
+                }
+            }
+        })
+
+
+        utools.onPluginEnter(({code, type, payload}) => {
+            if(code === 'queryParams'){
+                app.textarea = payload
+                app.handleTranClick(0)
+            }
+
+            if(code === 'json'){
+                app.preStr = payload
+                app.handleTranClick(1)
+            }
+
+            if(code === 'open' ) app.preStr = app.textarea = ''
+
+        })
+    </script>
+</html>

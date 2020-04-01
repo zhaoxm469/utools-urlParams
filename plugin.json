@@ -1,0 +1,41 @@
+{
+    "pluginName": "queryParams",
+    "description": "queryParams 参数格式化 ， JSON 转 queryParams",
+    "author": "zxm",
+    "main": "index.html",
+    "version": "0.0.1",
+    "homepage":"http://izhaoxm.cn",
+    "logo": "logo.png",
+    "features": [
+        {
+            "code": "open",
+            "explain": "queryParams",
+            "cmds": [
+                "urlParams",
+                "queryParams"
+            ]
+        },
+        {
+            "code": "queryParams",
+            "cmds": [
+                {
+                    "type": "regex",
+                    "label": "queryParam 转 JSON",
+                    "match": "/[=|?|&]/g",
+                    "minLength": 3,
+                    "maxLength": 999
+                }
+            ]
+        },
+        {
+            "code": "json",
+            "cmds": [
+                {
+                    "type": "regex",
+                    "label": "JSON 转 queryParams",
+                    "match": "/^{[\\s\\S]*}|\\[[\\s\\S]*\\]$/i"
+                }
+            ]
+        }
+    ]
+}
