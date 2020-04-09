@@ -103,7 +103,6 @@
                             )
                         }
                     } else {
-                        console.log(this.textarea)
                         let val = decodeURI(this.textarea.trim()),
                             str = ''
                         if (val.match(/[?|=]/g)) {
@@ -133,7 +132,7 @@
         // 进入插件 生命周期
         utools.onPluginEnter(({code, type, payload}) => {
             if(code === 'queryParams'){
-                app.textarea = payload
+                app.textarea = decodeURI(payload.trim());
                 app.handleTranClick(0)
             }
 
