@@ -5,6 +5,7 @@
     "main": "index.html",
     "version": "0.0.1",
     "homepage":"http://izhaoxm.cn",
+	"preload":"preload.js",
     "logo": "logo.png",
     "features": [
         {

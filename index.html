@@ -15,6 +15,15 @@
             .margin-b-20 {
                 margin-bottom: 20px;
             }
+            .flex-1{
+                flex:1;
+            }
+            .l{
+                float: left;
+            }
+            .m-b-20{
+                margin-bottom: 20px;
+            }
         </style>
     </head>
 
@@ -31,19 +40,23 @@
                 style="margin-bottom:20px;"
             >
             </el-input>
-            <el-row type="flex" justify="space-between" class="margin-b-20">
+            <el-row type="flex" class="m-b-20" >
                 <el-button
                     @click="handleTranClick(0)"
                     class="el-icon-bottom"
                     type="primary"
                     >转 JSON</el-button
                 >
-                <el-button
-                    @click="handleTranClick(1)"
-                    class="el-icon-top"
-                    type="primary"
-                    >转 queryParams</el-button
-                >
+                <el-row type="flex" class="flex-1" justify="end" >
+                    <el-button
+                        @click="handleTranClick(1)"
+                        class="el-icon-top"
+                        type="primary"
+                        >转 queryParams</el-button
+                    >
+                    <el-button @click="handleCopyClick('textarea')">复制 queryParams</el-button>
+                    <el-button @click="handleCopyClick('preStr')">复制 json</el-button>
+                </el-row>
             </el-row>
             <el-input
                 class="preStr"
@@ -67,6 +80,12 @@
                 }
             },
             methods: {
+                // 点击 copy 按钮
+                handleCopyClick(prop){
+                    $el.copy(this[prop]);
+                    message = this.$message.$success('复制成功');
+                },
+                // 点击转换按钮
                 handleTranClick(type) {
                     if (type === 1) {
                         let val = this.preStr
@@ -104,7 +123,14 @@
             }
         })
 
+        app.$message.$success = function(text={}){
+            if(this.$oMessage ){
+                this.$oMessage.close();
+            }
+            this.$oMessage = app.$message.success.call(this,text);
+        };
 
+        // 进入插件 生命周期
         utools.onPluginEnter(({code, type, payload}) => {
             if(code === 'queryParams'){
                 app.textarea = payload
@@ -119,5 +145,6 @@
             if(code === 'open' ) app.preStr = app.textarea = ''
 
         })
+
     </script>
 </html>
