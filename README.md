@@ -14,9 +14,11 @@
 
 ### 更新记录
 
+`v0.0.2`  
+新增复制按钮 （复制 JSON,queryParams 输入框数据）
+
 `v0.0.1`  
 queryParams 参数转 JSON   
 JSON 转 queryParams 参数
-
 
 
