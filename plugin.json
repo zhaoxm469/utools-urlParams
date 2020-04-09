@@ -3,7 +3,7 @@
     "description": "queryParams 参数格式化 ， JSON 转 queryParams",
     "author": "zxm",
     "main": "index.html",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "homepage":"http://izhaoxm.cn",
 	"preload":"preload.js",
     "logo": "logo.png",
